@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChatSphere - AI Chat Room</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #e9f0ff, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .chat-container {
+      width: 100%;
+      max-width: 680px;
+      min-height: 600px;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid #e3e8ee;
+      animation: pop-in 0.6s ease;
+    }
+    .chat-topbar {
+      background: #1f2937;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+    .chat-topbar .window-buttons {
+      display: flex;
+      gap: 8px;
+    }
+    .window-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .red { background: #ff5f56; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #27c93f; }
+    .chat-title {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-left: 20px;
+    }
+    #leave-btn {
+      margin-left: auto;
+      background: #f43f5e;
+      color: white;
+      padding: 6px 14px;
+      border: none;
+      border-radius: 18px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    #leave-btn:hover {
+      background: #be123c;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 26px;
+      overflow-y: auto;
+      background-image: url('https://www.transparenttextures.com/patterns/white-wall-3.png');
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .bubble {
+      max-width: 70%;
+      padding: 10px 16px;
+      border-radius: 18px;
+      font-size: 1rem;
+      word-break: break-word;
+      animation: fadeIn 0.5s ease;
+    }
+    .bubble.incoming {
+      background: #f1f5f9;
+      color: #111827;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .bubble.outgoing {
+      background: #3b82f6;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-inputbar {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+    }
+    .chat-inputbar input {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 20px;
+      border: 1px solid #d1d5db;
+      outline: none;
+      font-size: 1rem;
+      background: #fff;
+    }
+    .emoji {
+      font-size: 1.3rem;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .send-btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .send-btn:hover {
+      transform: scale(1.1);
+    }
+    #users-list {
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      background: #f3f4f6;
+      border-bottom: 1px solid #e5e7eb;
+      color: #1d4ed8;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pop-in {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-topbar">
+      <div class="window-buttons">
+        <div class="window-btn red"></div>
+        <div class="window-btn yellow"></div>
+        <div class="window-btn green"></div>
+      </div>
+      <span class="chat-title">ChatSphere AI Room</span>
+      <button id="leave-btn"><i class="fas fa-sign-out-alt"></i> Leave</button>
+    </div>
+    <div id="users-list">Users online: 1</div>
+    <div class="chat-messages"></div>
+    <form class="chat-inputbar" onsubmit="return false;">
+      <span class="emoji" id="emoji-btn">😊</span>
+      <input type="text" placeholder="Type a message..." />
+      <button class="send-btn" type="submit"><i class="fas fa-paper-plane"></i></button>
+    </form>
+    <div id="emoji-picker" style="display:none; position:absolute; bottom:70px; left:30px; background:#fff; border-radius:12px; box-shadow:0 2px 12px #0001; padding:10px; z-index:10;">
+      <span style="font-size:1.5rem;cursor:pointer;">😀</span>
+      <span style="font-size:1.5rem;cursor:pointer;">😂</span>
+      <span style="font-size:1.5rem;cursor:pointer;">😍</span>
+      <span style="font-size:1.5rem;cursor:pointer;">😎</span>
+      <span style="font-size:1.5rem;cursor:pointer;">😭</span>
+      <span style="font-size:1.5rem;cursor:pointer;">👍</span>
+      <span style="font-size:1.5rem;cursor:pointer;">🙏</span>
+      <span style="font-size:1.5rem;cursor:pointer;">🔥</span>
+      <span style="font-size:1.5rem;cursor:pointer;">🎉</span>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const form = document.querySelector('form');
+    const input = form.querySelector('input');
+    const messages = document.querySelector('.chat-messages');
+    const usersList = document.getElementById('users-list');
+    const leaveBtn = document.getElementById('leave-btn');
+    const emojiBtn = document.getElementById('emoji-btn');
+    const emojiPicker = document.getElementById('emoji-picker');
+
+    const username = new URLSearchParams(location.search).get('username') || 'User';
+    const room = 'General';
+
+    socket.emit('joinRoom', { username, room });
+
+    form.addEventListener('submit', e => {
+      const msg = input.value.trim();
+      if (!msg) return;
+      socket.emit('chatMessage', msg);
+      input.value = '';
+    });
+
+    socket.on('message', msg => {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.flexDirection = 'column';
+      wrapper.style.alignItems = msg.username === 'ASKME' ? 'flex-start' : 'flex-end';
+
+      const label = document.createElement('div');
+      label.textContent = msg.username;
+      label.style.fontSize = '0.85rem';
+      label.style.fontWeight = '600';
+      label.style.color = msg.username === 'ASKME' ? '#3b82f6' : '#111827';
+      label.style.marginBottom = '3px';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble ' + (msg.username === 'ASKME' ? 'incoming' : 'outgoing');
+      bubble.textContent = msg.text;
+
+      wrapper.appendChild(label);
+      wrapper.appendChild(bubble);
+
+      messages.appendChild(wrapper);
+      messages.scrollTop = messages.scrollHeight;
+    });
+
+    socket.on('roomUsers', data => {
+      usersList.textContent = `Users online: ${data.count}`;
+    });
+
+    leaveBtn.addEventListener('click', () => {
+      if (confirm('Do you want to leave the chat room?')) {
+        window.location.href = 'index.html';
+      }
+    });
+
+    emojiBtn.addEventListener('click', () => {
+      emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
+    });
+
+    emojiPicker.querySelectorAll('span').forEach(span => {
+      span.addEventListener('click', () => {
+        input.value += span.textContent;
+        input.focus();
+        emojiPicker.style.display = 'none';
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
+        emojiPicker.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+# Node modules (dependencies)
+node_modules/
+
+# Environment variables
+.env
+
+# Replit settings (if using Replit)
+.replit
+
+# Logs and debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# VS Code settings (optional, keep if team uses it)
+.vscode/
+
+# User data or temp files
+users.txt
+
+# Lock files (optional if you prefer consistency, else keep)
+# package-lock.json

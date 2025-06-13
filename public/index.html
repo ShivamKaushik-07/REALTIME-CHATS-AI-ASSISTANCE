@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+  <title>ASK ME | Join Chat Room</title>
+  <style>
+    body {
+      /* ...existing styles... */
+      background: linear-gradient(-45deg, #0A192F, #64FFDA, #FF4C60, #112240);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      background: linear-gradient(120deg, rgba(10,25,47,0.85) 60%, rgba(100,255,218,0.18) 100%), 
+        url('img/ai image.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(2px) brightness(0.95);
+    }
+    .welcome-glass {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 60px auto;
+      background: rgba(17,34,64,0.85);
+      border-radius: 32px;
+      box-shadow: 0 8px 32px 0 rgba(100,255,218,0.18), 0 0 24px 4px #64FFDA33;
+      border: 1.5px solid rgba(100,255,218,0.25);
+      display: flex;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+    .welcome-left {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px;
+      color: #fff;
+      background: rgba(0,0,0,0.18);
+      position: relative;
+    }
+    .welcome-left img {
+      width: 120px;
+      margin-bottom: 18px;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(100,255,218,0.18);
+      border: 3px solid #fff;
+      background: #fff;
+    }
+    .welcome-left h1 {
+      font-size: 2.8rem;
+      margin-bottom: 18px;
+      color: #64FFDA;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(33,147,176,0.18);
+    }
+    .welcome-left p {
+      font-size: 1.15rem;
+      color: #e0e0e0;
+      opacity: 0.97;
+      margin-bottom: 0;
+      text-align: center;
+    }
+    .welcome-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(17,34,64,0.92);
+      padding: 32px 18px;
+    }
+    .join-main {
+      width: 100%;
+      max-width: 340px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 22px;
+      box-shadow: 0 4px 24px 0 rgba(100,255,218,0.10);
+      padding: 36px 28px 28px 28px;
+      backdrop-filter: blur(8px);
+      position: relative;
+    }
+    .form-control {
+      width: 100%;
+    }
+
+    .btn:hover {
+      background: linear-gradient(90deg, #FF4C60 0%, #64FFDA 100%);
+      color: #0A192F;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 900px) {
+      .welcome-glass {
+        flex-direction: column;
+        max-width: 98vw;
+        margin: 8px;
+      }
+      .welcome-left, .welcome-right {
+        padding: 24px 10px;
+      }
+      .join-main {
+        max-width: 98vw;
+        padding: 24px 10px;
+      }
+    }
+
+    .floating-circles {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.18;
+      filter: blur(2px);
+      animation: float 12s infinite linear;
+    }
+
+    .c1 {
+      width: 120px; height: 120px;
+      background: #64FFDA;
+      left: 10vw; top: 60vh;
+      animation-delay: 0s;
+    }
+    .c2 {
+      width: 80px; height: 80px;
+      background: #FF4C60;
+      left: 70vw; top: 20vh;
+      animation-delay: 3s;
+    }
+    .c3 {
+      width: 100px; height: 100px;
+      background: #0A192F;
+      left: 50vw; top: 80vh;
+      animation-delay: 6s;
+    }
+    .c4 {
+      width: 60px; height: 60px;
+      background: #fff676;
+      left: 80vw; top: 70vh;
+      animation-delay: 9s;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(0) scale(1);}
+      50%  { transform: translateY(-60px) scale(1.1);}
+      100% { transform: translateY(0) scale(1);}
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-bg"></div>
+  <div class="welcome-glass">
+    <!-- LEFT: Welcome -->
+    <div class="welcome-left">
+      <img src="img/ai image.jpg" alt="AI Image" />
+      <h1><i class="fas fa-comments"></i> ASK ME</h1>
+      <p>
+        <b>Welcome to Ask Me!</b><br>
+        Your Smart AI & Human-Powered Discussion Hub.<br><br>
+        <span style="color:#64FFDA;">Get instant answers from AI or chat with real people in themed rooms.</span><br><br>
+        <b>🔹 AI Assistance 24/7<br>
+        🔹 Real-Time Chat Rooms<br>
+        🔹 Learn, Share, and Grow</b>
+      </p>
+      <p id="typewriter" style="font-size:1.1rem;color:#64FFDA;margin-bottom:18px;min-height:28px;"></p>
+    </div>
+    <!-- RIGHT: Form -->
+    <div class="welcome-right">
+      <main class="join-main">
+        <form action="#" method="GET">
+          <div class="form-control">
+            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div class="form-control">
+            <label for="username"><i class="fas fa-user"></i> Username</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Enter your name"
+              pattern="^[a-zA-Z0-9]+$"
+              title="Username must contain only letters and numbers, no spaces."
+              required
+            />
+          </div>
+          <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Join Chat</button>
+        </form>
+      </main>
+    </div>
+  </div>
+  <div class="floating-circles">
+    <span class="circle c1"></span>
+    <span class="circle c2"></span>
+    <span class="circle c3"></span>
+    <span class="circle c4"></span>
+  </div>
+  <script>
+    // Get the input fields
+    const emailInput = document.getElementById('email');
+    const usernameInput = document.getElementById('username');
+
+    // Listen for changes in real time
+    emailInput.addEventListener('input', function() {
+      console.log('Email:', emailInput.value);
+      // You can send this value to your server here using fetch/ajax if needed
+    });
+
+    usernameInput.addEventListener('input', function() {
+      console.log('Username:', usernameInput.value);
+      // You can send this value to your server here using fetch/ajax if needed
+    });
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      fetch('/api/save-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: emailInput.value,
+          username: usernameInput.value,
+          room: "Chill Zone" // Default room
+        })
+      });
+
+      // Always go to Chill Zone
+      window.location.href = `chill.html?username=${encodeURIComponent(usernameInput.value)}&email=${encodeURIComponent(emailInput.value)}`;
+    });
+
+    // Typewriter effect for welcome message
+    const typewriterText = "Start a conversation. Ask anything. Meet new friends!";
+    let i = 0;
+    function typeWriter() {
+      if (i < typewriterText.length) {
+        document.getElementById("typewriter").innerHTML += typewriterText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 45);
+      }
+    }
+    typeWriter();
+  </script>
+</body>
+</html>
